@@ -48,7 +48,7 @@ PoFile: polib.POFile = polib.pofile(args.file)
 if __name__ == "__main__":
     sameNameDocNumber = Document.objects.filter(Name__exact=BaseName).count()
     docObj = None
-    if sameNameDocNumber > 0:
+    if sameNameDocNumber > 0: # Check whether this doc has been inserted or not
         docObj = Document.objects.get(Name__exact=BaseName)
         if not args.isUpdate:
             logging.warning("PO文件已存在，跳过添加")
@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     FileObj = File(open(args.file, 'r'), name=BaseName)
 
-    if docObj == None:  # This is a new doc
+    if docObj == None: # Construct a new doc obj
         docObj = Document()
 
     docObj.Name = BaseName
