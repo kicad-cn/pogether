@@ -6,3 +6,15 @@ class POEntrySerializers(serializers.ModelSerializer):
         model =  POEntry
         fields=('id','Translated','Msgid','Msgstr')
     
+class DocMetaSerializers(serializers.Serializer):
+    TotalEntries= serializers.IntegerField()
+    UntranslatedEntries = serializers.IntegerField()
+    
+    
+    
+
+    
+
+    
+
+    

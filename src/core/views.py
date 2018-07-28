@@ -1,19 +1,21 @@
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView,RetrieveUpdateDestroyAPIView
-from core.ser import POEntrySerializers
 from rest_framework.response import Response
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404
 from core.models import Document,POEntry
-from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.decorators import api_view
+from rest_framework import status
 
 
 
-class customPagination(LimitOffsetPagination):
-    default_limit=5
-    max_limit=20
-    limit_query_param='limit'
-    offset_query_param = 'offset'
+from core.ser import POEntrySerializers,DocMetaSerializers
+
+class customPagination(PageNumberPagination):
+    page_size = 5 
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 
 
@@ -33,17 +35,20 @@ class ListPOEntries(ListAPIView):
         doc = self.kwargs.get('doc',None)
         #docobj = get_object_or_404(Document,Name__exact=doc)
         queryset =  POEntry.objects.filter(Doc__Name__exact=doc)
+        if bool(self.request.query_params.get('untranslated',False)):
+            queryset = queryset.filter(Translated=False)[:1]
         return  queryset
     
-        
-        
-        
-
 class  TweakPOEntry(RetrieveUpdateDestroyAPIView):
     """
     对单条翻译记录的改与查
     """
     serializer_class =  POEntrySerializers
+    
+    def get_queryset(self,*args,**kwargs):
+        pk = kwargs['pk']
+        obj = get_object_or_404(POEntry,pk=pk)
+        return obj
     
     def retrieve(self,*args,**kwargs):
         doc = kwargs['doc']
@@ -70,6 +75,27 @@ class  TweakPOEntry(RetrieveUpdateDestroyAPIView):
         else:
             return Response(status=400)
     
+
+@api_view(['Get'])
+def DocMeta(request,*args,**kwargs):
+    docName = kwargs.get('doc',None)
+    docObj = get_object_or_404(Document,Name__exact=docName)
+    queryset =  docObj.po_entries.all()
+    req = {
+        'TotalEntries': queryset.count(),
+        'UntranslatedEntries': queryset.filter(Translated=False).count()
+    }
+    ser = DocMetaSerializers(data=req)
+    if ser.is_valid():
+        return Response(data=ser.data)
+    else:
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+
+
 
 
     

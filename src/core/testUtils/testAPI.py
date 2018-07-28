@@ -63,6 +63,18 @@ class testCoreAPI(APITestCase):
         url = '/api/listentry/cvpcb'
         response = self.client.get(url)
         self.assertEqual(273,response.data['count'])
+    
+    def testConstraintList(self):
+        """
+        测试带有约束条件的列出操作
+        """
+        url = '/api/listentry/cvpcb?untranslated=true'
+        response = self.client.get(url)
+        self.assertEqual(1,response.data['count'])
+    
+    def testDocMeta(self):
+        url = '/api/docMeta/cvpcb'
+        response = self.client.get(url)
+        self.assertEqual(273,response.data['TotalEntries'])
+        self.assertEqual(18,response.data['UntranslatedEntries'])
 
-        
-        

@@ -14,7 +14,7 @@ class Document(models.Model):
 
 class POEntry(models.Model):
     Raw = models.TextField()
-    Doc = models.ForeignKey(Document, on_delete=models.CASCADE)
+    Doc = models.ForeignKey(Document, on_delete=models.CASCADE,related_name="po_entries")
     Translated = models.BooleanField()
     Msgid = models.TextField()
     Msgstr = models.TextField(blank=True)
