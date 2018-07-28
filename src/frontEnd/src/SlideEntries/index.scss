@@ -1,0 +1,27 @@
+.slide-entries {
+  outline: None;
+  padding: 0vh 0px 0px 0px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  .single-entry {
+    width: 100%;
+  }
+  .icon-button {
+    height: 100%;
+    cursor:pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .icon {
+      width: 100%;
+      transition: padding 1s;
+      transition-timing-function: ease;
+    }
+  }
+}
+
+.progress-bar {
+  padding-top: 20px;
+
+}

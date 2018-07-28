@@ -1,0 +1,15 @@
+$headerHeight : 64px;
+$contentTopPadding: 2vh;
+
+.frame-content{
+
+   background: #fff;
+   padding:$contentTopPadding 24px 0px 24px;
+   margin: 0;
+   height: calc(100vh - #{$headerHeight} - 2*24px );
+}
+
+.frame-header{
+   height: $headerHeight !important;
+   min-height: 64px;
+}
