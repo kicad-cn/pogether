@@ -6,6 +6,7 @@ import ListEntries from '../ListEntries/index'
 import {fetchDocs} from "./action";
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom'
+import mainLogo from './logo.png'
 
 
 const {SubMenu} = Menu;
@@ -26,8 +27,13 @@ class mainPage extends React.Component {
         });
         return (
             <Layout>
-                <Header className="frame-header">
-                    <div className="logo"/>
+                <Header className="frame-header" style={{fontcolor:"black",backgroundColor:"#ffffff"}}>
+                    <div className="logo">
+                        <img  src={mainLogo} height={"64px"} />
+                        <span style={{paddingLeft:"20px"}}>
+                   中文文档翻译
+                    </span>
+                    </div>
                 </Header>
                 <Content style={{padding: '24px 50px'}}>
                     <Layout style={{background: '#fff'}}>

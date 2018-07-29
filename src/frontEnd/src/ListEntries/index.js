@@ -4,7 +4,7 @@ import {fetchPageData, toggleEntryEditStatus, TWEAK_OOPERATIONS_ENUM as TweakENU
 ,pushAndrefetch,setPageFilter} from './action'
 
 import {HotKeys} from 'react-hotkeys';
-import {Button, Checkbox, Col, Icon, List, Pagination, Row} from 'antd';
+import {Button, Checkbox, Col, Icon, List, Pagination, Row,Progress} from 'antd';
 import SingleEntry from './SingleEntry/index'
 
 const IconText = ({type, text, onClick,disable}) => (
@@ -82,6 +82,11 @@ class listEntries extends React.Component {
                             }
                             }
                         >仅显示未翻译的条目</Checkbox>
+                    <Col span  ={4}>
+
+                        <Progress percent={50} size="small" status="active" />
+
+                    </Col>
                         <Pagination
                                 onChange={ (page) => {
                                     this.props.dispatch(fetchPageData(this.props.docName, page,this.props.filter));
