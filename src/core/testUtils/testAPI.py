@@ -70,11 +70,17 @@ class testCoreAPI(APITestCase):
         """
         url = '/api/listentry/cvpcb?untranslated=true'
         response = self.client.get(url)
-        self.assertEqual(1,response.data['count'])
+        self.assertEqual(18,response.data['count'])
     
     def testDocMeta(self):
         url = '/api/docMeta/cvpcb'
         response = self.client.get(url)
         self.assertEqual(273,response.data['TotalEntries'])
         self.assertEqual(18,response.data['UntranslatedEntries'])
+    
+    def testListDoc(self):
+        url = '/api/listdocs/'
+        response = self.client.get(url,format='json')
+        self.assertEqual(response.json()['count'],1)
+
 

@@ -15,16 +15,15 @@ class singleEntry extends React.Component {
             container = this.props.Entry.Msgstr;
         else
             container = (
-                <Formitem>
+                <Formitem
+                >
                     {
                         getFieldDecorator('Msgstr',
                             {
                                 rules: [{required: true, message: '请输入翻译文本'}],
-                            })(<TextArea rows={2} disabled={this.props.disableEdit}/>)
+                            })(<TextArea rows={3} disabled={this.props.disableEdit} placeholder={"请输入翻译文本"}/>)
                     }
                 </Formitem>)
-
-
         return (
             <div>
 

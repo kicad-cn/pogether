@@ -10,7 +10,7 @@ from rest_framework import status
 
 
 
-from core.ser import POEntrySerializers,DocMetaSerializers
+from core.ser import POEntrySerializers,DocMetaSerializers,DOcsSerializers
 
 class customPagination(PageNumberPagination):
     page_size = 5 
@@ -34,9 +34,9 @@ class ListPOEntries(ListAPIView):
     def get_queryset(self,*args,**kwargs):
         doc = self.kwargs.get('doc',None)
         #docobj = get_object_or_404(Document,Name__exact=doc)
-        queryset =  POEntry.objects.filter(Doc__Name__exact=doc)
-        if bool(self.request.query_params.get('untranslated',False)):
-            queryset = queryset.filter(Translated=False)[:1]
+        queryset =  POEntry.objects.filter(Doc__Name__exact=doc).order_by('id')
+        if self.request.query_params.get('untranslated','')=="true":
+            queryset = queryset.filter(Translated=False)
         return  queryset
     
 class  TweakPOEntry(RetrieveUpdateDestroyAPIView):
@@ -75,7 +75,6 @@ class  TweakPOEntry(RetrieveUpdateDestroyAPIView):
         else:
             return Response(status=400)
     
-
 @api_view(['Get'])
 def DocMeta(request,*args,**kwargs):
     docName = kwargs.get('doc',None)
@@ -91,19 +90,16 @@ def DocMeta(request,*args,**kwargs):
     else:
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+class ListDocs(ListAPIView):
+    serializer_class = DOcsSerializers
+    queryset = Document.objects.all()
+    pagination_class = customPagination
 
 
 
 
 
 
-
-    
-
-
-
-
-    
     
 
 

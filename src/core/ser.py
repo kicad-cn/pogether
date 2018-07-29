@@ -9,6 +9,11 @@ class POEntrySerializers(serializers.ModelSerializer):
 class DocMetaSerializers(serializers.Serializer):
     TotalEntries= serializers.IntegerField()
     UntranslatedEntries = serializers.IntegerField()
+
+class DOcsSerializers(serializers.ModelSerializer):
+    class Meta:
+        model=Document
+        fields =('id','Name')
     
     
     

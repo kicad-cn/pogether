@@ -1,17 +1,20 @@
 import {
+    AJAX_ENUM as AjaxENUM,
     SET_PAGE_META,
-    SET_PAGE_META_ENUM as PageMetaENUM,
     TOGGLE_EDIT_STATUS,
     TWEAK_OOPERATIONS_ENUM as TweakENUM,
     TWEAK_SINGLE_ENTRY,
+    SET_PAGE_FILTER,
 } from './action'
 import {combineReducers} from 'redux'
+import {message} from 'antd'
 import update from 'immutability-helper'
 
 const dataInitState = [];
 const pageMetaInitState = {
     loading: false,
     count: 0,
+    untranslated:false,
 }
 
 function data(state = dataInitState, action) {
@@ -21,9 +24,7 @@ function data(state = dataInitState, action) {
                 case TweakENUM.create:
                     return update(state, {
                         $push: [{
-                            id: action.id,
-                            Msgstr: action.Msgstr,
-                            Msgid: action.Msgid,
+                            ...action,
                             originMsgstr: action.Msgstr,
                             editing: false,
                             changed: false,
@@ -31,18 +32,24 @@ function data(state = dataInitState, action) {
                     });
                 case TweakENUM.update:
                     let v = state.findIndex(e => e.id === action.id);
-                    let changed = !(state[v].originMsgstr === action.Msgstr);
-
-                    return update(state, {
+                    let t = update(state, {
                         [v]: {
                             $merge: {
-                                id: action.id,
-                                Msgstr: action.Msgstr,
-                                Msgid: action.Msgid,
-                                changed
+                                ...action,
                             }
                         }
                     });
+
+                    let changed = !(t.find(e => e.id === action.id).originMsgstr=== action.Msgstr);
+                    return update(t, {
+                        [v]: {
+                            $merge: {
+                                changed,
+                            }
+                        }
+                    });
+
+
                 case TweakENUM.clear:
                     return dataInitState;
                 default:
@@ -62,31 +69,41 @@ function pageMeta(state = pageMetaInitState, action) {
     switch (action.type) {
         case SET_PAGE_META:
             switch (action.status) {
-                case PageMetaENUM.fetch:
+                case AjaxENUM.fetch:
                     return {
                         ...state,
                         loading: true,
-
-
                     }
-                case PageMetaENUM.receive:
+                case AjaxENUM.receive:
                     return {
                         ...state,
                         count: action.response.count,
                         currentPage: action.response.currentPage,
                         loading: false,
                     }
+                case AjaxENUM.error:
+                    message.error(action.response.message)
+                    return state;
+
                 default:
                     return state;
             }
+        case SET_PAGE_FILTER:
+            return update(state,{
+                $merge:{
+                    ...action.payload
+
+                }
+            })
+
         default:
             return state;
     }
 }
 
-const RootReducers = combineReducers({
+const ListEntries = combineReducers({
     data,
     pageMeta,
 })
 
-export default RootReducers;
+export default ListEntries;

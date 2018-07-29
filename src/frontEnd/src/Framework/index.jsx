@@ -3,30 +3,31 @@ import './index.scss'
 import {Layout, Menu} from 'antd';
 import {Route,Link} from 'react-router-dom'
 import ListEntries from '../ListEntries/index'
+import {fetchDocs} from "./action";
+import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom'
+
 
 const {SubMenu} = Menu;
 const {Header, Content, Footer, Sider} = Layout;
 
 
-class MainPage extends React.Component {
-
+class mainPage extends React.Component {
+    componentDidMount(){
+        this.props.dispatch(fetchDocs())
+    }
     render() {
         const ListWrap=({match})=> <ListEntries docName={match.params.doc}/>
-
+        const MenuItem = []
+        this.props.docs.map(e=>{
+            MenuItem.push(
+                <Menu.Item key={e.id}><Link to={"/docName/"+e.Name+"/"}>{e.Name}</Link></Menu.Item>
+            )
+        });
         return (
             <Layout>
                 <Header className="frame-header">
                     <div className="logo"/>
-                    <Menu
-                        theme="dark"
-                        mode="horizontal"
-                        defaultSelectedKeys={['2']}
-                        style={{lineHeight: '64px'}}
-                    >
-                        <Menu.Item key="1">nav 1</Menu.Item>
-                        <Menu.Item key="2">nav 2</Menu.Item>
-                        <Menu.Item key="3">nav 3</Menu.Item>
-                    </Menu>
                 </Header>
                 <Content style={{padding: '24px 50px'}}>
                     <Layout style={{background: '#fff'}}>
@@ -37,17 +38,11 @@ class MainPage extends React.Component {
                                 defaultOpenKeys={['sub1']}
                                 style={{height: '100%'}}
                             >
-                                <Menu.Item key="1"><Link to={"/docName/cvpcb"}> cvpcb</Link></Menu.Item>
-                                <Menu.Item key="2">option2</Menu.Item>
-                                <Menu.Item key="3">option3</Menu.Item>
-                                <Menu.Item key="4">option4</Menu.Item>
+                                {MenuItem}
                             </Menu>
                         </Sider>
                         <Content className="frame-content">
-                            <Route path={'/docName/:doc'} component={ListWrap}/>
-
-
-
+                            <Route exact path={'/docName/:doc/'} component={ListWrap}/>
                         </Content>
                     </Layout>
                 </Content>
@@ -55,5 +50,13 @@ class MainPage extends React.Component {
         );
     }
 }
+
+ function  mapStateToProps(state){
+    return {
+        docs:state.Framework.docs,
+        loading:state.Framework.loading
+    }
+ }
+const MainPage =withRouter(connect(mapStateToProps)(mainPage));
 
 export default MainPage;

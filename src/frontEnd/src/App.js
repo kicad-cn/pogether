@@ -4,7 +4,7 @@ import {createLogger} from 'redux-logger'
 import {Provider} from 'react-redux'
 
 import {BrowserRouter as Router} from 'react-router-dom'
-import RootReducer from './ListEntries/reducers'
+import RootReducers from './Reducers'
 import thunkMiddleware from 'redux-thunk'
 
 import MainPage from './Framework/index'
@@ -14,7 +14,7 @@ import './App.css'
 const loggerMiddleware = createLogger()
 
 
-const store = createStore(RootReducer, applyMiddleware(thunkMiddleware, loggerMiddleware));
+const store = createStore(RootReducers, applyMiddleware(thunkMiddleware, loggerMiddleware));
 
 class App extends React.Component {
 
