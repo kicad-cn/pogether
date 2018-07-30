@@ -1,11 +1,12 @@
 import React from 'react'
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Icon, BackTop } from 'antd';
 import { Route, Link } from 'react-router-dom'
 import ListEntries from '../ListEntries/index'
 import { fetchDocs } from "./action";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import mainLogo from './logo.png'
+import ReactResizeDetector from 'react-resize-detector';
 import './index.scss'
 
 
@@ -13,32 +14,64 @@ const { Header, Content, Sider } = Layout;
 
 
 class mainPage extends React.Component {
+    constructor(props) {
+        super(props)
+        this.BreakWidth = 576
+        this.triggerDisapperWidth = 813// 当宽度大于该数值时视为屏幕足够宽，不提供trigger控制侧边栏开关。
+        //为什么是813?因为iphone x 横屏后宽度为812
+
+        this.state = {
+            collapsed: window.innerWidth <= this.BreakWidth ? true : false,
+            width:window.innerWidth,
+        }
+    }
+    toggle = () => {
+        this.setState({
+            collapsed: !this.state.collapsed,
+        });
+    }
+
     componentDidMount() {
+        console.log("did mount")
         this.props.dispatch(fetchDocs())
     }
+    componentWillUnmount(){
+
+    }
     render() {
+        const Mobile = this.state.width <= this.BreakWidth
         const ListWrap = ({ match }) => <ListEntries docName={match.params.doc} />
         const MenuItem = []
+
         this.props.docs.map(e => MenuItem.push(
             <Menu.Item key={e.id}><Link to={"/docName/" + e.Name + "/"}>{e.Name}</Link></Menu.Item>)
         );
         return (
             <Layout>
+                <ReactResizeDetector handleWidth handleHeight onResize={(e)=>(this.setState({...this.state,width:e}))} />
                 <Header className="frame-header" style={{ fontcolor: "black", backgroundColor: "#ffffff" }}>
-                    <div className="logo">
-                        <img alt= "logo" src={mainLogo} height={"64px"} />
-                        <span style={{ paddingLeft: "20px" }}>
-                            中文文档翻译
-                    </span>
-                    </div>
+                    <Icon
+                        className={this.state.width<this.triggerDisapperWidth? "trigger" : "trigger-disable"}
+                        type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+                        onClick={this.toggle}
+                    />
+                    <img alt="logo" src={mainLogo} height={"64px"} />
+                    <p>
+                        中文文档翻译
+                             </p>
                 </Header>
-                <Content style={{ padding: '24px 50px' }}>
+                <Content style={{ padding: '12px 6px' }}>
                     <Layout style={{ background: '#fff' }}>
-                        <Sider width={200} style={{ background: '#fff' }}>
+                        <Sider
+                            collapsible
+                            breakpoint="lg"
+                            collapsed={this.state.collapsed}
+                            // onBreakpoint={this.setState({collapsed:true})} 
+                            collapsedWidth="0"
+                            trigger={null}
+                            width={200} style={{ background: '#fff' }}>
                             <Menu
                                 mode="inline"
-                                defaultSelectedKeys={['1']}
-                                defaultOpenKeys={['sub1']}
                                 style={{ height: '100%' }}
                             >
                                 {MenuItem}

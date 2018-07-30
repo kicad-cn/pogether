@@ -5,8 +5,9 @@ import {
     , pushAndrefetch, setPageFilter
 } from './action'
 
+import './index.scss'
 import { HotKeys } from 'react-hotkeys';
-import { Button, Checkbox, Col, Icon, List, Pagination, Row, Progress } from 'antd';
+import { Button, Checkbox, Col, Icon, List, Pagination, Row, Progress, Avatar } from 'antd';
 import SingleEntry from './SingleEntry/index'
 
 const IconText = ({ type, text, onClick, disable }) => (
@@ -15,11 +16,11 @@ const IconText = ({ type, text, onClick, disable }) => (
     </span>
 );
 const extraIcon = {
-    ok: <span><Icon type={"check-circle"} style={{ color: "#52c41a", fontSize: "32px" }} /></span>,
-    error: <span><Icon type={"close-circle"} style={{ color: "#a8071a", fontSize: "32px" }} /></span>,
-    warning: <span><Icon type={"exclamation-circle"} style={{ color: "#fadb14", fontSize: "32px" }} /></span>,
-    loading: <span><Icon type={"loading"} spin style={{ color: "#1890ff", fontSize: "32px" }} /></span>,
-    untranslated: <span><Icon type={"question-circle"} style={{ color: "#1890ff", fontSize: "32px" }} /></span>,
+    ok: <span className="extra-icon-container"><Icon type={"check-circle"} style={{ color: "#52c41a", fontSize: "32px" }} /></span>,
+    error: <span className="extra-icon-container"><Icon type={"close-circle"} style={{ color: "#a8071a", fontSize: "32px" }} /></span>,
+    warning: <span className="extra-icon-container"><Icon type={"exclamation-circle"} style={{ color: "#fadb14", fontSize: "32px" }} /></span>,
+    loading: <span className="extra-icon-container"><Icon type={"loading"} spin style={{ color: "#1890ff", fontSize: "32px" }} /></span>,
+    untranslated: <span className="extra-icon-container"><Icon type={"question-circle"} style={{ color: "#1890ff", fontSize: "32px" }} /></span>,
 
 }
 
@@ -73,31 +74,56 @@ class listEntries extends React.Component {
     render() {
         return (
             <HotKeys handlers={this.KeyHandler} keyMap={this.map}>
-                <Row type={"flex"} justify="space-between">
-                    <Checkbox
-                        checked={this.props.filter.untranslated}
-                        onChange={(e) => {
-                            console.log(e.target.checked);
-                            this.props.dispatch(setPageFilter({ untranslated: e.target.checked }))
-                            this.props.dispatch(fetchPageData(this.props.docName, 1, { ...this.props.filter, untranslated: e.target.checked }));
-                        }
-                        }
-                    >仅显示未翻译的条目</Checkbox>
-                    <Col span={4}>
+                <Row className="control-panel" type={"flex"} justify="space-between" align-items="center" align-content='space-around'>
 
-                        <Progress percent={50} size="small" status="active" />
+                    <Col
+                        xs={{ span: 24, }}
+                        md={{span:12}}
+                        lg={{span:6}}
 
+                    >
+                        <div className="control-panel-item">
+                            <Checkbox
+                                checked={this.props.filter.untranslated}
+                                onChange={(e) => {
+                                    console.log(e.target.checked);
+                                    this.props.dispatch(setPageFilter({ untranslated: e.target.checked }))
+                                    this.props.dispatch(fetchPageData(this.props.docName, 1, { ...this.props.filter, untranslated: e.target.checked }));
+                                }}>
+                                仅显示未翻译的条目
+                    </Checkbox>
+                        </div>
                     </Col>
-                    <Pagination
-                        onChange={(page) => {
-                            this.props.dispatch(fetchPageData(this.props.docName, page, this.props.filter));
-                        }}
-                        total={this.props.pageMeta.count}
-                        pageSize={5}
-                        position="top"
-                        showQuickJumper={true}
-                        current={this.props.pageMeta.currentPage}
-                    />
+                    <Col
+                        xs={{ span: 24, }}
+                        md={{span:12}}
+                        lg={{span:6}}
+                    >
+                        <div className="control-panel-item">
+
+                            <Progress percent={50} size="small" status="active" />
+                        </div>
+                    </Col>
+                    <Col
+                        xs={{ span: 24, }}
+                        lg={{span:12}}
+                    >
+                        <div className="control-panel-item">
+
+                            <Pagination
+                                size="small"
+                                onChange={(page) => {
+                                    this.props.dispatch(fetchPageData(this.props.docName, page, this.props.filter));
+                                }}
+                                total={this.props.pageMeta.count}
+                                pageSize={5}
+                                position="top"
+                                showQuickJumper={true}
+                                showTotal={(total,range)=>`共有 ${total} 条`}
+                                current={this.props.pageMeta.currentPage}
+                            />
+                        </div>
+                    </Col>
                 </Row>
                 <Row>
                     <List
@@ -129,7 +155,8 @@ class listEntries extends React.Component {
                                 />
                             </List.Item>
                         )}
-                    />
+                    >
+                    </List>
                 </Row>
             </HotKeys>
         )

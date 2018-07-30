@@ -12,4 +12,23 @@ $contentTopPadding: 2vh;
 .frame-header{
    height: $headerHeight !important;
    min-height: 64px;
+   padding: 0 10px  !important;
+   display: flex;
+   align-items: center;
+   justify-content: flex-start;
+   p{
+       margin-bottom:0 !important;
+       flex-shrink: 2;
+
+   }
+   img{
+    padding: 0 10px 0 10px
+
+   }
+}
+.trigger{
+    font-size: 24px
+}
+.trigger-disable{
+    display: none !important;
 }
