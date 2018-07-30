@@ -4,6 +4,8 @@ python:
   - "3.6"
 
 before_install:
+  - make $TRAVIS_BUILD_DIR/root
+  - export POGETHER_ROOT = $TRAVIS_BUILD_DIR/root/
   - pip3 install -r requirements.txt
 
 
