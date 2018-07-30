@@ -1,0 +1,18 @@
+language: python
+
+python:
+  - "3.6"
+
+before_install:
+  - pip3 install -r requirements.txt
+
+
+install:  
+  - cd src
+  - python3 manage.py makemigrations core
+  - python3 manage.py migrate
+
+
+script: 
+  -python3 manage.py test
+
