@@ -1,5 +1,5 @@
 
-import APIList from './API'
+import APIList from '../API'
 import axios from 'axios'
 export const FETCH_DOCS = "FETCH_DOCS"
 

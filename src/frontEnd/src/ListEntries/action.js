@@ -1,5 +1,5 @@
 import axios from 'axios'
-import APIList from './API'
+import APIList from '../API'
 
 export const TWEAK_SINGLE_ENTRY = "TWEAK_SINGLE_ENTRY";
 export const TOGGLE_EDIT_STATUS = "TOGGLE_EDIT_STATUS";

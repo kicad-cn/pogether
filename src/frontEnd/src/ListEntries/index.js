@@ -7,7 +7,7 @@ import {
 
 import './index.scss'
 import { HotKeys } from 'react-hotkeys';
-import { Button, Checkbox, Col, Icon, List, Pagination, Row, Progress, Avatar } from 'antd';
+import { Button, Checkbox, Col, Icon, List, Pagination, Row, Progress} from 'antd';
 import SingleEntry from './SingleEntry/index'
 
 const IconText = ({ type, text, onClick, disable }) => (

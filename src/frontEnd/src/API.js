@@ -5,5 +5,6 @@ const APIList = {
     submitMsgstr: (docname, id) => BaseURL + "/entry/" + docname + "/" + id.toString(),
     getSingleEntry: (docname, id) => BaseURL + "/entry/" + docname + "/" + id.toString(),
     FetchdocMeta: (docname) => BaseURL + "/docMeta/" + docname,
+    getDocList : BaseURL + "/listdocs/",
 };
 export default APIList;

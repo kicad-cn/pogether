@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Menu, Icon, BackTop } from 'antd';
+import { Layout, Menu, Icon} from 'antd';
 import { Route, Link } from 'react-router-dom'
 import ListEntries from '../ListEntries/index'
 import { fetchDocs } from "./action";
@@ -39,7 +39,6 @@ class mainPage extends React.Component {
 
     }
     render() {
-        const Mobile = this.state.width <= this.BreakWidth
         const ListWrap = ({ match }) => <ListEntries docName={match.params.doc} />
         const MenuItem = []
 
