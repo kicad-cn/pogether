@@ -59,17 +59,18 @@ export function pushAndrefetch(docName,id,payload ,settings = {disableAutoNext: 
 
 export function tweakEntry(payload, opertions = TWEAK_OOPERATIONS_ENUM.create) {
     switch (opertions) {
-        case TWEAK_OOPERATIONS_ENUM.update:
-        case TWEAK_OOPERATIONS_ENUM.create:
-            return {
-                type: TWEAK_SINGLE_ENTRY,
-                operation: opertions,
-                ...payload,
-            }
         case TWEAK_OOPERATIONS_ENUM.clear:
             return {
                 type: TWEAK_SINGLE_ENTRY,
                 operation: opertions,
+            }
+        case TWEAK_OOPERATIONS_ENUM.update:
+        case TWEAK_OOPERATIONS_ENUM.create:
+        default:
+            return {
+                type: TWEAK_SINGLE_ENTRY,
+                operation: opertions,
+                ...payload,
             }
     }
 }
