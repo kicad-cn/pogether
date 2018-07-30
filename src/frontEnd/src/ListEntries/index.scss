@@ -1,6 +1,7 @@
 
 .extra-icon-container{
-  width: 5vh;
+  padding: 0 5px;
+  width: 6vh;
   height: 100%;
   display: flex;
   align-content: center;
@@ -8,11 +9,7 @@
 
 }
 .control-panel-item{
-  padding: 5px 0;
+  padding: 10px 0;
   display: flex;
   justify-content: space-around;
-
-
-  
-
 }
