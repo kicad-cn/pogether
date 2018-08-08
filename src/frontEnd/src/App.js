@@ -17,6 +17,9 @@ const loggerMiddleware = createLogger()
 const store = createStore(RootReducers, applyMiddleware(thunkMiddleware, loggerMiddleware));
 
 class App extends React.Component {
+    // componentDidMount(){
+    //     document.title="Kicad 中文文档翻译"
+    // }
 
     render() {
         return (
@@ -25,7 +28,6 @@ class App extends React.Component {
                 <Router>
                     <MainPage/>
                 </Router>
-
             </Provider>
         );
     }

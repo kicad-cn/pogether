@@ -42,6 +42,7 @@
     "react": "^16.4.1",
     "react-dev-utils": "^5.0.1",
     "react-dom": "^16.4.1",
+    "react-helmet": "^5.2.0",
     "react-hotkeys": "^1.1.4",
     "react-redux": "^5.0.7",
     "react-resize-detector": "^3.1.0",
@@ -106,5 +107,8 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.5.2"
   }
 }

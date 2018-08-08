@@ -6,7 +6,9 @@ import { fetchDocs } from "./action";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import mainLogo from './logo.png'
+import favicon from '../logo.png'
 import ReactResizeDetector from 'react-resize-detector';
+import {Helmet} from "react-helmet";
 import './index.scss'
 
 
@@ -47,6 +49,13 @@ class mainPage extends React.Component {
         );
         return (
             <Layout>
+                    <Helmet>
+                        <meta charSet="utf-8" />
+                        <title>Kicad 文档翻译</title>
+                        <link rel="canonical" href="http://translate.kicad.cn" />
+                        <link rel="shortcut icon" href={favicon}/>
+                    </Helmet>
+                    ...
                 <ReactResizeDetector handleWidth handleHeight onResize={(e)=>(this.setState({...this.state,width:e}))} />
                 <Header className="frame-header" style={{ fontcolor: "black", backgroundColor: "#ffffff" }}>
                     <Icon
@@ -56,7 +65,7 @@ class mainPage extends React.Component {
                     />
                     <img alt="logo" src={mainLogo} height={"64px"} />
                     <p>
-                        中文文档翻译
+                        文档翻译
                              </p>
                 </Header>
                 <Content style={{ padding: '12px 6px' }}>
