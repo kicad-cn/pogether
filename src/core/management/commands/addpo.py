@@ -3,6 +3,7 @@ from core.models import Document, POEntry
 from django.core.files import File
 from django.db import transaction
 import os
+import json
 import logging
 import polib
 import pickle
@@ -36,7 +37,7 @@ class Command(BaseCommand):
         if Document.objects.filter(Name__exact=BaseName).count() > 0: # Check whether this doc has been inserted or not
             docObj = Document.objects.get(Name__exact=BaseName)
             if not opt['isUpdate']:
-                logging.warning("PO文件已存在，跳过添加")
+                logging.critical("PO文件已存在，跳过添加")
                 sys.exit(0)
             
         FileObj = File(open(opt['file'], 'r'), name=BaseName)
@@ -44,6 +45,7 @@ class Command(BaseCommand):
             docObj = Document()
 
         docObj.Name = BaseName
+        docObj.metaInfo = json.dumps(PoFile.metadata)
         docObj.PoFile = FileObj
         docObj.save() # Update or Insert 
 
