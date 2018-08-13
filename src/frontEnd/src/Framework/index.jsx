@@ -9,8 +9,8 @@ import favicon from '../logo.png'
 import ReactResizeDetector from 'react-resize-detector';
 import {Helmet} from "react-helmet";
 import './index.scss'
-import axios from 'axios';
-import JSEncrypt from 'jsencrypt'
+// import axios from 'axios';
+// import JSEncrypt from 'jsencrypt'
 
 const {Header, Content, Sider} = Layout;
 
@@ -21,7 +21,6 @@ class mainPage extends React.Component {
         this.BreakWidth = 576
         this.triggerDisapperWidth = 813// 当宽度大于该数值时视为屏幕足够宽，不提供trigger控制侧边栏开关。
         //为什么是813?因为iphone x 横屏后宽度为812
-
         this.state = {
             collapsed: window.innerWidth <= this.BreakWidth ? true : false,
             width: window.innerWidth,
@@ -35,31 +34,29 @@ class mainPage extends React.Component {
     }
 
     componentDidMount() {
-        console.log("did mount")
-        let message = 'Hello world!';
-        let publicKey = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvphII+/jn73y5bpG9yCz198ac\n+IuqcTpGZJTjZojD1AMfoI8iDOvhmWmU+pBZhVTzpRFUc7djkG9TCpsbIaj/BMws\nH3+KlYhj5EECk2/CeXPX43FMcMi/acIVq60DqRYK60sbpYth4xjht56F2Uy/a71r\nWSIiYxIhr9t0JEmZQQIDAQAB\n-----END PUBLIC KEY-----"
-        let pri = "-----BEGIN RSA PRIVATE KEY-----\nMIICXAIBAAKBgQCvphII+/jn73y5bpG9yCz198ac+IuqcTpGZJTjZojD1AMfoI8i\nDOvhmWmU+pBZhVTzpRFUc7djkG9TCpsbIaj/BMwsH3+KlYhj5EECk2/CeXPX43FM\ncMi/acIVq60DqRYK60sbpYth4xjht56F2Uy/a71rWSIiYxIhr9t0JEmZQQIDAQAB\nAoGBAKQszV6oZZYkOqf3uTFyENQ2q+W8So8dFiMFkEScaejgGatOH3rsKO3MvusI\n6DNEdIrnFrOhFSByuBseJqvNYm6tilBztRzZ6/is5hOd22HmAxziIvFk+o52XCM6\ns0pLt7l/gBjbEsL6wRbsZBTgv5GvJkeEgir+EwDdpF2umlMhAkEAxtEuBZaidc4I\ndaIdU6j1sIDTt+B4tHAu+5hH6YLxdboAtRQB9TS6bKCsxy3utflI+buYrqyAyReT\n5n20FqPuVwJBAOIrAuyEb9WaQAvlmuj8y8awNEJNHA148mLzxMULud+iOnWhwGiC\nIDONXPg3nU2RPM+4pIQasb+zNhaCPuMvxicCQQCPvndOtQ06rT7yhcY8UWFpPotU\nW2gJ1T4yy3PawcCABH40bYXI2lma5kRlMbFwQg7f+CE40SG/wls9f07wO4+7AkA8\n+4n7Si55cvEIBC4D2n37ofFFW1NQEqeQpNgOpX3F3hFTPH0L8OJL5DcIOr6wdpPm\nEoxRjn0VCnZwFUhtq6kLAj8EzNOiaqLKyGZyoKPAmI3b3SIIwtSFMsvgbPzfs4Lg\nsVTk8JRQMmamnJyk+bcAPtcFF/vO+sFAes8/cm1sU0g=\n-----END RSA PRIVATE KEY-----"
-
-        let encry = new JSEncrypt();
-        encry.setPublicKey(publicKey)
-        let encrypted = encry.encrypt(message);
-
-        let decrypt = new JSEncrypt();
-        decrypt.setPrivateKey(pri);
-        let uncrypted = decrypt.decrypt(encrypted);
-        console.log(encrypted)
-
-        console.log("unc",uncrypted);
-        console.log(publicKey)
-        console.log(pri)
-
-        encry.setPublicKey(publicKey);
-        axios.post('http://localhost:8000/user/test/',{
-            payload:encrypted
-
-        });
-
-
+        // console.log("did mount")
+        // let message = 'Hello world!';
+        // let publicKey = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvphII+/jn73y5bpG9yCz198ac\n+IuqcTpGZJTjZojD1AMfoI8iDOvhmWmU+pBZhVTzpRFUc7djkG9TCpsbIaj/BMws\nH3+KlYhj5EECk2/CeXPX43FMcMi/acIVq60DqRYK60sbpYth4xjht56F2Uy/a71r\nWSIiYxIhr9t0JEmZQQIDAQAB\n-----END PUBLIC KEY-----"
+        // let pri = "-----BEGIN RSA PRIVATE KEY-----\nMIICXAIBAAKBgQCvphII+/jn73y5bpG9yCz198ac+IuqcTpGZJTjZojD1AMfoI8i\nDOvhmWmU+pBZhVTzpRFUc7djkG9TCpsbIaj/BMwsH3+KlYhj5EECk2/CeXPX43FM\ncMi/acIVq60DqRYK60sbpYth4xjht56F2Uy/a71rWSIiYxIhr9t0JEmZQQIDAQAB\nAoGBAKQszV6oZZYkOqf3uTFyENQ2q+W8So8dFiMFkEScaejgGatOH3rsKO3MvusI\n6DNEdIrnFrOhFSByuBseJqvNYm6tilBztRzZ6/is5hOd22HmAxziIvFk+o52XCM6\ns0pLt7l/gBjbEsL6wRbsZBTgv5GvJkeEgir+EwDdpF2umlMhAkEAxtEuBZaidc4I\ndaIdU6j1sIDTt+B4tHAu+5hH6YLxdboAtRQB9TS6bKCsxy3utflI+buYrqyAyReT\n5n20FqPuVwJBAOIrAuyEb9WaQAvlmuj8y8awNEJNHA148mLzxMULud+iOnWhwGiC\nIDONXPg3nU2RPM+4pIQasb+zNhaCPuMvxicCQQCPvndOtQ06rT7yhcY8UWFpPotU\nW2gJ1T4yy3PawcCABH40bYXI2lma5kRlMbFwQg7f+CE40SG/wls9f07wO4+7AkA8\n+4n7Si55cvEIBC4D2n37ofFFW1NQEqeQpNgOpX3F3hFTPH0L8OJL5DcIOr6wdpPm\nEoxRjn0VCnZwFUhtq6kLAj8EzNOiaqLKyGZyoKPAmI3b3SIIwtSFMsvgbPzfs4Lg\nsVTk8JRQMmamnJyk+bcAPtcFF/vO+sFAes8/cm1sU0g=\n-----END RSA PRIVATE KEY-----"
+        //
+        // let encry = new JSEncrypt();
+        // encry.setPublicKey(publicKey)
+        // let encrypted = encry.encrypt(message);
+        //
+        // let decrypt = new JSEncrypt();
+        // decrypt.setPrivateKey(pri);
+        // let uncrypted = decrypt.decrypt(encrypted);
+        // console.log(encrypted)
+        //
+        // console.log("unc",uncrypted);
+        // console.log(publicKey)
+        // console.log(pri)
+        //
+        // encry.setPublicKey(publicKey);
+        // axios.post('http://localhost:8000/user/test/',{
+        //     payload:encrypted
+        //
+        // });
         this.props.dispatch(fetchDocs())
     }
 
@@ -74,7 +71,7 @@ class mainPage extends React.Component {
             <Menu.Item key={e.id}>
                 <Link to={"/docName/" + e.Name + "/"} className={"menu-item-link"}>
                     {e.Name}
-                    <Progress status={"active"} percent={50} type={"circle"} width={30} className={"inline-progress"}/>
+                    <Progress status={"active"} percent={Math.round(100-e.UntranslatedEntries*100/e.TotalEntries)} type={"circle"} width={30} className={"inline-progress"}/>
                 </Link>
             </Menu.Item>);
 
@@ -105,8 +102,8 @@ class mainPage extends React.Component {
 
                 </Header>
 
-                <Content style={{padding: '12px 6px'}}>
-                    <Layout style={{background: '#fff'}}>
+                <Content style={{padding: '12px 6px',height:'auto'}}>
+                    <Layout style={{background: '#fff',height:'fit-content'}}>
                         <Sider
                             collapsible
                             breakpoint="lg"

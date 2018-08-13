@@ -20,7 +20,7 @@ $headerIconSize: 24px;
     font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin-bottom: 0 !important;
     flex-shrink: 2;
-    font-size: 20pt;
+    font-size: 10pt;
 
   }
   img {
@@ -54,5 +54,8 @@ $headerIconSize: 24px;
   display: flex !important;
   justify-content: space-between;
   align-items: center;
+}
+@media screen and (max-width: 764px){
+
 }
 
