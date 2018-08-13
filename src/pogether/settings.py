@@ -25,7 +25,8 @@ SECRET_KEY = 'z3+rp0j059ik_x85r&i##*6*d8y!==^2#@$(8%3bzvng_!=&fh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['future.cnworkshop.xyz']
+
 
 
 # Application definition
@@ -133,3 +134,5 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.environ['POGETHER_ROOT']
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+STATIC_ROOT = '/var/www/pogether/src/static/'

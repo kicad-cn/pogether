@@ -17,6 +17,10 @@ class customPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 1000
 
+class tempPagination(PageNumberPagination):
+    page_size =10000
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 
 
@@ -93,7 +97,7 @@ def DocMeta(request,*args,**kwargs):
 class ListDocs(ListAPIView):
     serializer_class = DOcsSerializers
     queryset = Document.objects.all()
-    pagination_class = customPagination
+    pagination_class = tempPagination
 
 
 
