@@ -1913,6 +1913,10 @@ cross-spawn@^3.0.0:
     lru-cache "^4.0.1"
     which "^1.2.9"
 
+cryptico@^1.0.2:
+  version "1.0.2"
+  resolved "http://localhost:8081/repository/npm-proxy/cryptico/-/cryptico-1.0.2.tgz#b1310d68270c9dcf50ded54ae13445af2b64071b"
+
 cryptiles@2.x.x:
   version "2.0.5"
   resolved "http://registry.npm.taobao.org/cryptiles/download/cryptiles-2.0.5.tgz#3bdfecdc608147c1c67202fa291e7dca59eaa3b8"
@@ -1934,6 +1938,10 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+crypto-js@^3.1.9-1:
+  version "3.1.9-1"
+  resolved "http://localhost:8081/repository/npm-proxy/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
 
 crypto-random-string@^1.0.0:
   version "1.0.0"
@@ -3676,6 +3684,12 @@ https-browserify@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/https-browserify/download/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
 
+hybrid-crypto-js@^0.1.6:
+  version "0.1.6"
+  resolved "http://localhost:8081/repository/npm-proxy/hybrid-crypto-js/-/hybrid-crypto-js-0.1.6.tgz#c9da90b2c256dea9cc59b780575953730191fc7a"
+  dependencies:
+    node-forge "^0.7.1"
+
 iconv-lite@0.4.19:
   version "0.4.19"
   resolved "http://registry.npm.taobao.org/iconv-lite/download/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
@@ -4422,6 +4436,10 @@ js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.8"
   resolved "http://registry.npm.taobao.org/js-base64/download/js-base64-2.4.8.tgz#57a9b130888f956834aa40c5b165ba59c758f033"
 
+js-rsa@^1.0.2:
+  version "1.0.2"
+  resolved "http://localhost:8081/repository/npm-proxy/js-rsa/-/js-rsa-1.0.2.tgz#957b16f7bebf32acfa05eab9f23388952e919935"
+
 "js-tokens@^3.0.0 || ^4.0.0":
   version "4.0.0"
   resolved "http://registry.npm.taobao.org/js-tokens/download/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -4471,6 +4489,10 @@ jsdom@^9.12.0:
     whatwg-encoding "^1.0.1"
     whatwg-url "^4.3.0"
     xml-name-validator "^2.0.1"
+
+jsencrypt@^3.0.0-rc.1:
+  version "3.0.0-rc.1"
+  resolved "http://localhost:8081/repository/npm-proxy/jsencrypt/-/jsencrypt-3.0.0-rc.1.tgz#0e0a4744ba43cc557fb5cf62fe8646bceb561b1c"
 
 jsesc@^1.3.0:
   version "1.3.0"
@@ -5148,7 +5170,7 @@ node-fetch@^1.0.1:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-forge@0.7.5:
+node-forge@0.7.5, node-forge@^0.7.1:
   version "0.7.5"
   resolved "http://registry.npm.taobao.org/node-forge/download/node-forge-0.7.5.tgz#6c152c345ce11c52f465c2abd957e8639cd674df"
 

@@ -1,34 +1,58 @@
-$headerHeight : 64px;
+$headerHeight: 64px;
 $contentTopPadding: 2vh;
+$headerIconSize: 24px;
 
-.frame-content{
-
-   background: #fff;
-   padding:$contentTopPadding 24px 0px 24px;
-   margin: 0;
-   height: calc(100vh - #{$headerHeight} - 2*24px );
+.frame-content {
+  background: #fff;
+  padding: $contentTopPadding 24px 0px 24px;
+  margin: 0;
+  height: calc(100vh - #{$headerHeight} - 2 * 24px);
 }
 
-.frame-header{
-   height: $headerHeight !important;
-   min-height: 64px;
-   padding: 0 10px  !important;
-   display: flex;
-   align-items: center;
-   justify-content: flex-start;
-   p{
-       margin-bottom:0 !important;
-       flex-shrink: 2;
+.frame-header {
+  height: $headerHeight !important;
+  min-height: 64px;
+  padding: 0 10px !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  p {
+    font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-bottom: 0 !important;
+    flex-shrink: 2;
+    font-size: 20pt;
 
-   }
-   img{
+  }
+  img {
     padding: 0 10px 0 10px
+  }
+  .login-button {
+    font-size: $headerIconSize;
+    margin-left: auto;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
 
-   }
+.trigger {
+  font-size: 24px
 }
-.trigger{
-    font-size: 24px
+
+.trigger-disable {
+  display: none !important;
 }
-.trigger-disable{
-    display: none !important;
+
+.frame-sider {
+  width: 320px;
 }
+
+.inline-progress {
+  float: right;
+}
+
+.menu-item-link {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+}
+

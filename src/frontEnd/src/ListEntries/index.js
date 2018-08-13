@@ -99,10 +99,6 @@ class listEntries extends React.Component {
                         md={{span:12}}
                         lg={{span:6}}
                     >
-                        <div className="control-panel-item">
-
-                            <Progress percent={50} size="small" status="active" />
-                        </div>
                     </Col>
                     <Col
                         xs={{ span: 24, }}
