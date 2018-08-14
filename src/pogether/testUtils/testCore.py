@@ -1,6 +1,6 @@
 from django.test import TestCase, override_settings
 from django.conf import settings
-from core.models import Document, POEntry
+from pogether.models import Document, POEntry
 import polib
 import pickle
 import shutil

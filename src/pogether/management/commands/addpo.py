@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from core.models import Document, POEntry
+from pogether.models import Document, POEntry
 from django.core.files import File
 from django.db import transaction
 import os

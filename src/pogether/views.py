@@ -3,14 +3,11 @@ from rest_framework.generics import ListAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404
-from core.models import Document,POEntry
+from pogether.models import Document,POEntry
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import api_view
 from rest_framework import status
-
-
-
-from core.ser import POEntrySerializers,DocMetaSerializers,DOcsSerializers
+from pogether.ser import POEntrySerializers,DocMetaSerializers,DOcsSerializers
 
 class customPagination(PageNumberPagination):
     page_size = 5 

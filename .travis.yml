@@ -11,7 +11,7 @@ before_install:
 
 install:  
   - cd src
-  - python3 manage.py makemigrations core
+  - python3 manage.py makemigrations pogether
   - python3 manage.py migrate
 
 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import POEntry, Document
+from pogether.models import POEntry, Document
 
 
 class POEntrySerializers(serializers.ModelSerializer):

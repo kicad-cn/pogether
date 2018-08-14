@@ -1,5 +1,5 @@
 from django.urls import path
-from core.views import TweakPOEntry,ListPOEntries,DocMeta,ListDocs
+from pogether.views import TweakPOEntry,ListPOEntries,DocMeta,ListDocs
 
 urlpatterns = [
     path('entry/<str:doc>/<int:pk>', TweakPOEntry.as_view()),

@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     'rest_framework',
-    'core.apps.CoreConfig',
+    'pogether.apps.PogetherConfig',
     'user.apps.UserConfig',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -1,8 +1,8 @@
 from rest_framework.test import APITestCase, override_settings
-import core.testUtils.mocking as moc
+import pogether.testUtils.mocking as moc
 
 
-class testCoreAPI(APITestCase):
+class testPogetherAPI(APITestCase):
     @classmethod
     @override_settings(MEDIA_ROOT=moc.MEDIA_ROOT)
     def setUpClass(cls):
