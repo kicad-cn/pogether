@@ -81,6 +81,6 @@ class testCoreAPI(APITestCase):
     def testListDoc(self):
         url = '/api/listdocs/'
         response = self.client.get(url,format='json')
-        self.assertEqual(response.json()['count'],1)
+        self.assertEqual(response.data[0].get('Name'),'cvpcb')
 
 

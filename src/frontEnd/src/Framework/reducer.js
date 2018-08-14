@@ -23,7 +23,7 @@ const  Framework = function(state = initState, action) {
                     case fetchENUM.receive:
                         return update(state, {
                             $merge: {
-                                docs: action.response.results,
+                                docs: action.response,
                                 loading:false,
                             }
                         })

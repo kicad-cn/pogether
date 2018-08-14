@@ -93,7 +93,6 @@ def DocMeta(request,*args,**kwargs):
 class ListDocs(ListAPIView):
     serializer_class = DOcsSerializers
     queryset = Document.objects.all()
-    pagination_class = customPagination
 
 
 
