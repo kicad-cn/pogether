@@ -7,7 +7,7 @@ import shutil
 import tempfile
 import codecs
 import random
-import core.testUtils.mocking as moc
+import pogether.testUtils.mocking as moc
 
 # Create your tests here
 

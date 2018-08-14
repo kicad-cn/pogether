@@ -1,5 +1,5 @@
-from core.models import Document,POEntry
-import core.models as cm
+from pogether.models import Document,POEntry
+import pogether.models as cm
 import polib
 import pickle
 import tempfile
@@ -11,7 +11,7 @@ def setUpDatebase():
     Document = cm.Document
     if Document.objects.all().count() == 0:
         samplePo = tempfile.NamedTemporaryFile()
-        with open("./core/testUtils/sample.po") as fp:
+        with open("./pogether/testUtils/sample.po") as fp:
             samplePo.write(bytes(fp.read(), 'utf-8'))
             samplePo.seek(0)
         FileObj = File(samplePo, name='cvpcb')
