@@ -4,9 +4,9 @@ import axios from 'axios'
 export const FETCH_DOCS = "FETCH_DOCS"
 
 export const FETCH_DOCS_ENUM = {
-    fetch: 1,
-    receive: 2,
-    error: 3,
+    fetch: "Fetch",
+    receive: "Receive",
+    error: "Error",
 };
 
 export function tweakDocList(status = FETCH_DOCS_ENUM.fetch, response = {}) {
