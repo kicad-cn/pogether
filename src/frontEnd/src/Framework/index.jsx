@@ -1,5 +1,5 @@
 import React from 'react'
-import {Icon, Layout, Menu, Progress} from 'antd';
+import {Icon, Layout, Menu, Progress, Spin} from 'antd';
 import {Link, Route, withRouter} from 'react-router-dom'
 import ListEntries from '../ListEntries/index'
 import {fetchDocs} from "./action";
@@ -66,14 +66,24 @@ class mainPage extends React.Component {
 
     render() {
         const ListWrap = ({match}) => <ListEntries docName={match.params.doc}/>
+        let MenuItem;
 
-        const MenuItem = this.props.docs.map(e =>
-            <Menu.Item key={e.id}>
-                <Link to={"/docName/" + e.Name + "/"} className={"menu-item-link"}>
-                    {e.Name}
-                    <Progress status={"active"} percent={Math.round(100-e.UntranslatedEntries*100/e.TotalEntries)} type={"circle"} width={30} className={"inline-progress"}/>
-                </Link>
-            </Menu.Item>);
+        if (!this.props.loading) {
+            MenuItem = this.props.docs.map(e =>
+                <Menu.Item key={e.id}>
+                    <Link to={"/docName/" + e.Name + "/"} className={"menu-item-link"}>
+                        {e.Name}
+                        <Progress status={"active"}
+                                  percent={Math.round(100 - e.UntranslatedEntries * 100 / e.TotalEntries)}
+                                  type={"circle"} width={30} className={"inline-progress"}/>
+                    </Link>
+                </Menu.Item>);
+        }
+        else {
+            MenuItem = () => { };
+        }
+
+
 
         return (
             <Layout>
@@ -102,8 +112,10 @@ class mainPage extends React.Component {
 
                 </Header>
 
-                <Content style={{padding: '12px 6px',height:'auto'}}>
-                    <Layout style={{background: '#fff',height:'fit-content'}}>
+                <Content style={{padding: '12px 6px', height: 'auto'}}>
+                    <Layout style={{background: '#fff', height: 'fit-content'}}>
+
+                        <Spin tip={"加载列表.."} spinning={this.props.loading} delay={200} style={{zIndex:'-1'}}>
                         <Sider
                             collapsible
                             breakpoint="lg"
@@ -113,16 +125,18 @@ class mainPage extends React.Component {
                             trigger={null}
                             style={{background: '#fff'}}
                             className={"frame-sider"}
+
                         >
-                            <Menu
-                                mode="inline"
-                                style={{height: '100%'}}
-                            >
-                                {MenuItem}
-                            </Menu>
+                                <Menu
+                                    mode="inline"
+                                    style={{height: '100%'}}
+                                >
+                                    {MenuItem}
+                                </Menu>
                         </Sider>
+                        </Spin>
                         <Content className="frame-content">
-                            <Route exact path={'/docName/:doc/'} component={ListWrap}/>
+                            <Route exact path={'/docName/:doc/'} render={ListWrap}/>
                         </Content>
                     </Layout>
                 </Content>

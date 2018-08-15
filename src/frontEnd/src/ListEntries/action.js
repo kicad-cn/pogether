@@ -5,6 +5,7 @@ export const TWEAK_SINGLE_ENTRY = "TWEAK_SINGLE_ENTRY";
 export const TOGGLE_EDIT_STATUS = "TOGGLE_EDIT_STATUS";
 export const SET_PAGE_META = "SET_PAGE_META";
 export const SET_PAGE_FILTER="SET_PAGE_FILTER";
+export const REQUEST_PAGE_DATA="SET_PAGE_FILTER";
 
 export const AJAX_ENUM = {
     fetch: "FETCH",
@@ -19,6 +20,12 @@ export const TWEAK_OOPERATIONS_ENUM = {
 };
 export const SUBMIT_MSGSTR = "SUBMIT_MSGSTR";
 
+/**
+ *  an action to manage single entry statue
+ * @param status
+ * @param response
+ * @returns {{type: string, status: *, response: *}}
+ */
 function submitMsgstr(status, response) {
     return {
         type: SUBMIT_MSGSTR,
@@ -27,6 +34,13 @@ function submitMsgstr(status, response) {
     }
 }
 
+/**
+ * Fetch  info about a single entry, and update it to ui
+ *
+ * @param docName
+ * @param id
+ * @returns {function(*): Promise<AxiosResponse<any>>}
+ */
 function fetchSingleEntry(docName,id) {
     return function (dispatch) {
         dispatch(tweakEntry({id,loading:true},TWEAK_OOPERATIONS_ENUM.update))
@@ -39,7 +53,16 @@ function fetchSingleEntry(docName,id) {
         }
 }
 
+/**
+ * push an translateion, then re fetch it from server
+ * @param docName
+ * @param id
+ * @param payload
+ * @param settings
+ * @returns {function(*): Promise<AxiosResponse<any>>}
+ */
 export function pushAndrefetch(docName,id,payload ,settings = {disableAutoNext: false}) {
+
     return function (dispatch) {
         dispatch(tweakEntry({id,loading:true},TWEAK_OOPERATIONS_ENUM.update))
         return axios.patch(APIList.submitMsgstr(docName,id), {
@@ -103,7 +126,7 @@ export function setPageFilter(payload) {
     }
 }
 
-export function fetchPageData(docName, page, settings={pageSize :5,untranslated:false}) {
+export function changePage(docName, page, settings={pageSize :5,untranslated:false}) {
     return function (dispatch) {
         dispatch(setPageMeta(AJAX_ENUM.fetch))
         return axios.get(APIList.ListEntries(docName, page,settings))
@@ -113,11 +136,11 @@ export function fetchPageData(docName, page, settings={pageSize :5,untranslated:
                         dispatch(setPageMeta(AJAX_ENUM.error,response))
                     else
                     {
-                        dispatch(tweakEntry({}, TWEAK_OOPERATIONS_ENUM.clear));
                         dispatch(setPageMeta(AJAX_ENUM.receive, {
                             count: response.data.count,
                             currentPage: page
                         }))
+                        dispatch(tweakEntry({}, TWEAK_OOPERATIONS_ENUM.clear));
                         response.data.results.map(e => dispatch(tweakEntry({
                             ...e
                         }, TWEAK_OOPERATIONS_ENUM.create)))
