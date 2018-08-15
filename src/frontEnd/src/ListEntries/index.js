@@ -6,8 +6,9 @@ import {
 } from './action'
 
 import './index.scss'
+import  './index.mobile.scss'
 import { HotKeys } from 'react-hotkeys';
-import { Button, Checkbox, Col, Icon, List, Pagination, Row, Progress} from 'antd';
+import { Button, Checkbox, Col, Icon, List, Pagination, Row } from 'antd';
 import SingleEntry from './SingleEntry/index'
 
 const IconText = ({ type, text, onClick, disable }) => (
@@ -121,10 +122,11 @@ class listEntries extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <Row>
+                <Row className={"entries-list"}>
                     <List
                         itemLayout="vertical"
                         size="large"
+                        loading={this.props.pageMeta.loading}
                         dataSource={this.props.listData}
                         renderItem={item => (
                             <List.Item

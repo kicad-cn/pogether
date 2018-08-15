@@ -1,6 +1,6 @@
 import React from 'react'
-import {Icon, Layout, Menu, Progress, Spin} from 'antd';
-import {NavLink,Link, Route, withRouter} from 'react-router-dom'
+import {BackTop, Icon, Layout, Menu, Progress, Spin} from 'antd';
+import {Link, Route, withRouter} from 'react-router-dom'
 import ListEntries from '../ListEntries/index'
 import {fetchDocs} from "./action";
 import {connect} from 'react-redux';
@@ -19,13 +19,24 @@ const {Header, Content, Sider} = Layout;
 class mainPage extends React.Component {
     constructor(props) {
         super(props)
-        this.BreakWidth = 576
+
+        let re=new RegExp('/docName/(.*?)/')
+        let match=re.exec(this.props.location.pathname)
+        let selectedMenuKey=null;
+        if(re!==null&&match!=null){
+             selectedMenuKey="menuitem"+match[1];
+        }
+        this.BreakWidth = 576;
         this.triggerDisapperWidth = 813// 当宽度大于该数值时视为屏幕足够宽，不提供trigger控制侧边栏开关。
+        this.Mobile = window.innerWidth<this.triggerDisapperWidth
+
         //为什么是813?因为iphone x 横屏后宽度为812
         this.state = {
-            collapsed: window.innerWidth <= this.BreakWidth ? true : false,
+            collapsed: window.innerWidth <= this.BreakWidth ,
             width: window.innerWidth,
+            selectedMenuKey
         }
+        this.handleScroll= this.handleScroll.bind(this)
     }
 
     toggle = () => {
@@ -34,7 +45,16 @@ class mainPage extends React.Component {
         });
     }
 
+    handleScroll(){
+        if(this.Mobile)
+            this.setState({collapsed:true})
+
+
+    }
+
     componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll);
+
         // console.log("did mount")
         // let message = 'Hello world!';
         // let publicKey = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvphII+/jn73y5bpG9yCz198ac\n+IuqcTpGZJTjZojD1AMfoI8iDOvhmWmU+pBZhVTzpRFUc7djkG9TCpsbIaj/BMws\nH3+KlYhj5EECk2/CeXPX43FMcMi/acIVq60DqRYK60sbpYth4xjht56F2Uy/a71r\nWSIiYxIhr9t0JEmZQQIDAQAB\n-----END PUBLIC KEY-----"
@@ -62,20 +82,35 @@ class mainPage extends React.Component {
     }
 
     componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+
+
+    }
+    menuItemClick(selectedMenuKey){
+        if(this.Mobile)
+            this.toggle()
+        this.setState({
+            selectedMenuKey
+        })
+
+
+
+
 
     }
 
     render() {
         // const ListWrap = ({match}) => <ListEntries docName={match.params.doc}/>
-        const  DocRouters=this.props.docs.map(e=>
-            <Route exact path={'/docName/'+e.Name+'/'} render={()=><ListEntries docName={e.Name}/>} />
+        const DocRouters = this.props.docs.map(e =>
+            <Route key={'Route'+e.Name} exact path={'/docName/' + e.Name + '/'} render={() => <ListEntries docName={e.Name}/>}/>
         )
+
         let MenuItem;
 
         if (!this.props.loading) {
             MenuItem = this.props.docs.map(e =>
-                <Menu.Item key={e.id}>
-                    <Link to={"/docName/" + e.Name + "/"} className={"menu-item-link"} replace>
+                <Menu.Item key={'menuitem'+e.Name}>
+                    <Link to={"/docName/" + e.Name + "/"} className={"menu-item-link"} onClick={()=>this.menuItemClick('menuitem'+e.Name)}>
                         {e.Name}
                         <Progress status={"active"}
                                   percent={Math.round(100 - e.UntranslatedEntries * 100 / e.TotalEntries)}
@@ -84,9 +119,9 @@ class mainPage extends React.Component {
                 </Menu.Item>);
         }
         else {
-            MenuItem = () => { };
+            MenuItem = () => {
+            };
         }
-
 
 
         return (
@@ -99,7 +134,6 @@ class mainPage extends React.Component {
                 </Helmet>
                 <ReactResizeDetector handleWidth handleHeight
                                      onResize={(e) => (this.setState({...this.state, width: e}))}/>
-
                 <Header className="frame-header" style={{fontcolor: "black", backgroundColor: "#ffffff"}}>
                     <Icon
                         className={this.state.width < this.triggerDisapperWidth ? "trigger" : "trigger-disable"}
@@ -110,40 +144,42 @@ class mainPage extends React.Component {
                     <p>
                         文档翻译
                     </p>
-
                     <Icon type={"user"} className={"login-button"} onClick={() => console.log("hit")}/>
-
-
                 </Header>
 
-                <Content  className="frame-content">
-                    <Layout style={{background: '#fff', height: 'fit-content'}}>
-                        <Spin tip={"加载列表.."} spinning={this.props.loading} delay={200} style={{zIndex:'-1'}}>
+                <Content className="frame-content">
+                    <Layout style={{background: '#fff', height: 'fit-content',}}>
                         <Sider
                             collapsible
                             breakpoint="lg"
                             collapsed={this.state.collapsed}
-                            // onBreakpoint={this.setState({collapsed:true})} 
-                            collapsedWidth="0"
+                            // onBreakpoint={this.setState({collapsed:true})}
                             trigger={null}
+                            collapsedWidth="0"
                             style={{background: '#fff'}}
                             className={"frame-sider"}
 
                         >
-                                <Menu
-                                    mode="inline"
-                                    style={{height: '100%'}}
-                                >
-                                    {MenuItem}
-                                </Menu>
+                            <Spin tip={"加载列表.."} spinning={this.props.loading} delay={200}
+                                  className={"menu-spin-wrapper"}/>
+
+                            <Menu
+                                mode="inline"
+                                style={{height: '100%'}}
+                                selectedKeys={[this.state.selectedMenuKey]}
+                            >
+                                {MenuItem}
+                            </Menu>
                         </Sider>
-                        </Spin>
-                        <Content >
+                        <Content>
                             {/*<Route exact path={'/docName/:doc/'} render={ListWrap}/>*/}
                             {DocRouters}
                         </Content>
                     </Layout>
                 </Content>
+                <div>
+                    <BackTop visibilityHeight={150}/>
+                </div>
             </Layout>
         );
     }

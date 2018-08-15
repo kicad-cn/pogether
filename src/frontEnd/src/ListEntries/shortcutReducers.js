@@ -4,13 +4,13 @@ import update from 'immutability-helper'
 export function handleShortCut(state, action) {
     switch (action.shortcut) {
         case EDIT_NEXT:
-            return handleEditNext(state)
+            return handleEditNext(state);
         case DUPLICATE:
-            return handleDuplicate(state)
+            return handleDuplicate(state);
         case PUSH_ENTRY:
             return handlePushEntry(state);
-
-
+        default:
+            return state;
     }
 }
 
@@ -47,7 +47,7 @@ function handleEditNext(state){
 
 function handleDuplicate(state) {
     let activate = state.findIndex(e => e.editing === true)
-    if(activate!=-1){
+    if(activate!==-1){
         return update(state,{
             [activate]:{
                 $merge:{
@@ -62,7 +62,7 @@ function handleDuplicate(state) {
 
 function handlePushEntry(state) {
     let activate = state.findIndex(e => e.editing === true)
-    if(activate!=-1){
+    if(activate!==-1){
         return update(state,{
             [activate]:{
                 $merge:{

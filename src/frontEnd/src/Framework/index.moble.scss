@@ -1,0 +1,23 @@
+
+@import "../conf";
+
+$headerHeight: 64px;
+@media screen and (max-width: $MOBILE-MAX-WIDTH){
+  .trigger {
+    font-size: 24px
+  }
+
+  .frame-content {
+    padding: 4px 6px;
+    margin: 0;
+    height: calc(100vh - #{$headerHeight} - 2 * 24px);
+  }
+  .frame-sider{
+    position: absolute !important;
+    z-index: 3;
+    height: 100%;
+  }
+
+
+
+}

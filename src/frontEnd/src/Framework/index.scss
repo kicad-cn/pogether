@@ -3,12 +3,14 @@ $contentTopPadding: 2vh;
 $headerIconSize: 24px;
 
 .frame-content {
-  background: #fff;
   padding: $contentTopPadding 24px 0px 24px;
   margin: 0;
-  height: calc(100vh - #{$headerHeight} - 2 * 24px);
+  height: auto;
 }
 
+.trigger-disable {
+  display: none !important;
+}
 .frame-header {
   height: $headerHeight !important;
   min-height: 64px;
@@ -34,14 +36,6 @@ $headerIconSize: 24px;
   }
 }
 
-.trigger {
-  font-size: 24px
-}
-
-.trigger-disable {
-  display: none !important;
-}
-
 .frame-sider {
   width: 320px;
 }
@@ -54,8 +48,5 @@ $headerIconSize: 24px;
   display: flex !important;
   justify-content: space-between;
   align-items: center;
-}
-@media screen and (max-width: 764px){
-
 }
 

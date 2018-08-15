@@ -14,13 +14,12 @@ import './App.css'
 const loggerMiddleware = createLogger()
 
 
-const store = createStore(RootReducers, applyMiddleware(thunkMiddleware, loggerMiddleware));
+
+const store =process.env.NODE_ENV === 'production'? createStore(RootReducers, applyMiddleware(thunkMiddleware)):
+    createStore(RootReducers, applyMiddleware(thunkMiddleware, loggerMiddleware))
+
 
 class App extends React.Component {
-    // componentDidMount(){
-    //     document.title="Kicad 中文文档翻译"
-    // }
-
     render() {
         return (
             <Provider store={store}>
