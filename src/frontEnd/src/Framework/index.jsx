@@ -1,6 +1,6 @@
 import React from 'react'
 import {Icon, Layout, Menu, Progress, Spin} from 'antd';
-import {Link, Route, withRouter} from 'react-router-dom'
+import {NavLink,Link, Route, withRouter} from 'react-router-dom'
 import ListEntries from '../ListEntries/index'
 import {fetchDocs} from "./action";
 import {connect} from 'react-redux';
@@ -9,6 +9,7 @@ import favicon from '../logo.png'
 import ReactResizeDetector from 'react-resize-detector';
 import {Helmet} from "react-helmet";
 import './index.scss'
+import './index.moble.scss'
 // import axios from 'axios';
 // import JSEncrypt from 'jsencrypt'
 
@@ -65,13 +66,16 @@ class mainPage extends React.Component {
     }
 
     render() {
-        const ListWrap = ({match}) => <ListEntries docName={match.params.doc}/>
+        // const ListWrap = ({match}) => <ListEntries docName={match.params.doc}/>
+        const  DocRouters=this.props.docs.map(e=>
+            <Route exact path={'/docName/'+e.Name+'/'} render={()=><ListEntries docName={e.Name}/>} />
+        )
         let MenuItem;
 
         if (!this.props.loading) {
             MenuItem = this.props.docs.map(e =>
                 <Menu.Item key={e.id}>
-                    <Link to={"/docName/" + e.Name + "/"} className={"menu-item-link"}>
+                    <Link to={"/docName/" + e.Name + "/"} className={"menu-item-link"} replace>
                         {e.Name}
                         <Progress status={"active"}
                                   percent={Math.round(100 - e.UntranslatedEntries * 100 / e.TotalEntries)}
@@ -112,9 +116,8 @@ class mainPage extends React.Component {
 
                 </Header>
 
-                <Content style={{padding: '12px 6px', height: 'auto'}}>
+                <Content  className="frame-content">
                     <Layout style={{background: '#fff', height: 'fit-content'}}>
-
                         <Spin tip={"加载列表.."} spinning={this.props.loading} delay={200} style={{zIndex:'-1'}}>
                         <Sider
                             collapsible
@@ -135,8 +138,9 @@ class mainPage extends React.Component {
                                 </Menu>
                         </Sider>
                         </Spin>
-                        <Content className="frame-content">
-                            <Route exact path={'/docName/:doc/'} render={ListWrap}/>
+                        <Content >
+                            {/*<Route exact path={'/docName/:doc/'} render={ListWrap}/>*/}
+                            {DocRouters}
                         </Content>
                     </Layout>
                 </Content>
