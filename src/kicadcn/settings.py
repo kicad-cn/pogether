@@ -25,7 +25,7 @@ SECRET_KEY = 'z3+rp0j059ik_x85r&i##*6*d8y!==^2#@$(8%3bzvng_!=&fh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.cnworkshop.xyz','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['.cnworkshop.xyz','localhost','127.0.0.1','192.168.25.215']
 
 
 # Application definition
