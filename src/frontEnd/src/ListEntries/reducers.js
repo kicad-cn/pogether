@@ -38,7 +38,7 @@ function data(state = dataInitState, action) {
                     let t = update(state, {
                         [v]: {
                             $merge: {
-                                needToPush:false,  //to achive push shortcut
+                                needToPush:false,  //to fulfil push shortcut
                                 ...action,
                             }
                         }
@@ -61,7 +61,16 @@ function data(state = dataInitState, action) {
             }
         case TOGGLE_EDIT_STATUS:
             let v = state.findIndex(e => e.id === action.id);
-            return update(state, {
+            let soloEdit=state;
+            for (let i = 0; i < state.length; i++) if(i!==v)
+                soloEdit = update(soloEdit, {
+                    [i]: {
+                        $merge: {
+                            editing: false
+                        }
+                    }
+                })
+            return update(soloEdit, {
                 [v]: {$toggle: ['editing']}
             });
         case SHORTCUT:

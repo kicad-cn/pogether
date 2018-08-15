@@ -21,7 +21,10 @@ class singleEntry extends React.Component {
                         getFieldDecorator('Msgstr',
                             {
                                 rules: [{required: true, message: '请输入翻译文本'}],
-                            })(<TextArea rows={3} disabled={this.props.disableEdit} placeholder={"请输入翻译文本"}/>)
+                            })(<TextArea
+
+                            ref={(input) => input.focus()}
+                            rows={3} disabled={this.props.disableEdit} placeholder={"请输入翻译文本"}/>)
                     }
                 </Formitem>)
         return (

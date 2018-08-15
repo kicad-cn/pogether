@@ -34,6 +34,8 @@ function submitMsgstr(status, response) {
     }
 }
 
+
+
 /**
  * Fetch  info about a single entry, and update it to ui
  *
