@@ -6,6 +6,8 @@ import {
     TWEAK_SINGLE_ENTRY,
     SET_PAGE_FILTER,
 } from './action'
+import {SHORTCUT} from  './shortcutAction'
+import {handleShortCut} from "./shortcutReducers";
 import {combineReducers} from 'redux'
 import {message} from 'antd'
 import update from 'immutability-helper'
@@ -32,9 +34,11 @@ function data(state = dataInitState, action) {
                     });
                 case TweakENUM.update:
                     let v = state.findIndex(e => e.id === action.id);
+                    if(v===-1)return state;
                     let t = update(state, {
                         [v]: {
                             $merge: {
+                                needToPush:false,  //to achive push shortcut
                                 ...action,
                             }
                         }
@@ -60,6 +64,8 @@ function data(state = dataInitState, action) {
             return update(state, {
                 [v]: {$toggle: ['editing']}
             });
+        case SHORTCUT:
+            return handleShortCut(state,action);
         default:
             return state;
     }
@@ -95,7 +101,6 @@ function pageMeta(state = pageMetaInitState, action) {
 
                 }
             })
-
         default:
             return state;
     }

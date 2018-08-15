@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {
-    fetchPageData, toggleEntryEditStatus, TWEAK_OOPERATIONS_ENUM as TweakENUM, tweakEntry
+    changePage, toggleEntryEditStatus, TWEAK_OOPERATIONS_ENUM as TweakENUM, tweakEntry
     , pushAndrefetch, setPageFilter
 } from './action'
 
@@ -38,7 +38,7 @@ class listEntries extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(fetchPageData(this.props.docName, 1, this.props.filter));
+        this.props.dispatch(changePage(this.props.docName, 1, this.props.filter));
     }
 
     selectExtraIcon(id) {
@@ -88,7 +88,7 @@ class listEntries extends React.Component {
                                 onChange={(e) => {
                                     console.log(e.target.checked);
                                     this.props.dispatch(setPageFilter({ untranslated: e.target.checked }))
-                                    this.props.dispatch(fetchPageData(this.props.docName, 1, { ...this.props.filter, untranslated: e.target.checked }));
+                                    this.props.dispatch(changePage(this.props.docName, 1, { ...this.props.filter, untranslated: e.target.checked }));
                                 }}>
                                 仅显示未翻译的条目
                     </Checkbox>
@@ -109,7 +109,7 @@ class listEntries extends React.Component {
                             <Pagination
                                 size="small"
                                 onChange={(page) => {
-                                    this.props.dispatch(fetchPageData(this.props.docName, page, this.props.filter));
+                                    this.props.dispatch(changePage(this.props.docName, page, this.props.filter));
                                 }}
                                 total={this.props.pageMeta.count}
                                 pageSize={5}
@@ -165,7 +165,6 @@ function mapStateToProps(state) {
         pageMeta: state.ListEntries.pageMeta,
         filter: {
             untranslated: state.ListEntries.pageMeta.untranslated,
-
         }
     }
 }
