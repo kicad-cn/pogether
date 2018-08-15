@@ -1,0 +1,7 @@
+= kicad 中国
+
+本仓库存储kicad中国(www.kicad.cn)的Web 代码
+
+
+
+
