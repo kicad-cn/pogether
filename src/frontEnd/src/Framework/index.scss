@@ -5,7 +5,7 @@ $headerIconSize: 24px;
 .frame-content {
   padding: $contentTopPadding 24px 0px 24px;
   margin: 0;
-  height: auto;
+  height: 100%;
 }
 
 .trigger-disable {
@@ -25,8 +25,17 @@ $headerIconSize: 24px;
     font-size: 10pt;
 
   }
+  .img-wrapper{
+    padding: 3px 10px;
+    height: 100%;
+    display: flex;
+    align-content: center;
+  }
   img {
-    padding: 0 10px 0 10px
+    position: relative;
+    padding: 0;
+    height:100%;
+    width: auto;
   }
   .login-button {
     font-size: $headerIconSize;
@@ -42,6 +51,9 @@ $headerIconSize: 24px;
 
 .inline-progress {
   float: right;
+}
+.trigger-common{
+  display: none;
 }
 
 .menu-item-link {

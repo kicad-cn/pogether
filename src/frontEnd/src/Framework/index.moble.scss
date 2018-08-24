@@ -3,9 +3,38 @@
 
 $headerHeight: 64px;
 @media screen and (max-width: $MOBILE-MAX-WIDTH){
-  .trigger {
-    font-size: 24px
+  .trigger-common{
+    display: inline-block;
+    position: fixed;
+    font-size: 24pt;
+    background-color: rgba(0xff,0xff,0xff,0);
+    width: auto;
+    height:auto;
+
+    z-index: 3;
   }
+  .frame-header{
+    padding: 0 !important;
+    .img-wrapper{
+      padding: 3px 5px;
+    }
+    .login-button{
+      padding: 10px;
+    }
+  }
+
+  .trigger-unfold{
+    bottom:15%;
+    left: 0;
+  }
+  .trigger-fold{
+    left: calc(200px + 6px);
+    bottom:15%;
+    z-index: 10;
+
+
+  }
+
 
   .frame-content {
     padding: 4px 6px;
@@ -13,9 +42,10 @@ $headerHeight: 64px;
     height: calc(100vh - #{$headerHeight} - 2 * 24px);
   }
   .frame-sider{
-    position: absolute !important;
+    position: fixed!important;
     z-index: 3;
     height: 100%;
+    width: 50%;
   }
 
 

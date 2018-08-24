@@ -20,36 +20,38 @@ class mainPage extends React.Component {
     constructor(props) {
         super(props)
 
-        let re=new RegExp('/docName/(.*?)/')
-        let match=re.exec(this.props.location.pathname)
-        let selectedMenuKey=null;
-        if(re!==null&&match!=null){
-             selectedMenuKey="menuitem"+match[1];
+        let re = new RegExp('/docName/(.*?)/')
+        let match = re.exec(this.props.location.pathname)
+        let selectedMenuKey = null;
+        if (re !== null && match != null) {
+            selectedMenuKey = "menuitem" + match[1];
         }
         this.BreakWidth = 576;
         this.triggerDisapperWidth = 813// 当宽度大于该数值时视为屏幕足够宽，不提供trigger控制侧边栏开关。
-        this.Mobile = window.innerWidth<this.triggerDisapperWidth
+        this.Mobile = window.innerWidth < this.triggerDisapperWidth
 
         //为什么是813?因为iphone x 横屏后宽度为812
         this.state = {
-            collapsed: window.innerWidth <= this.BreakWidth ,
+            collapsed: window.innerWidth <= this.BreakWidth,
             width: window.innerWidth,
             selectedMenuKey
         }
-        this.handleScroll= this.handleScroll.bind(this)
+        this.headerRef = React.createRef()
+        this.handleScroll = this.handleScroll.bind(this)
+        this.toggle = this.toggle.bind(this)
     }
 
     toggle = () => {
+        this.scrollToHeader();
         this.setState({
             collapsed: !this.state.collapsed,
         });
     }
 
-    handleScroll(){
-        if(this.Mobile)
-            this.setState({collapsed:true})
-
-
+    handleScroll() {
+        if (this.Mobile)
+            if (!this.state.collapsed)
+                this.toggle()
     }
 
     componentDidMount() {
@@ -86,31 +88,38 @@ class mainPage extends React.Component {
 
 
     }
-    menuItemClick(selectedMenuKey){
-        if(this.Mobile)
+
+    menuItemClick(selectedMenuKey) {
+        if (this.Mobile)
             this.toggle()
         this.setState({
             selectedMenuKey
         })
+    }
 
-
-
-
+    scrollToHeader() {
+        this.headerRef.current.scrollIntoView()
+    }
+    isEditing(){
+        //TODO: 需要和子组件通信
+        return false;
 
     }
 
     render() {
         // const ListWrap = ({match}) => <ListEntries docName={match.params.doc}/>
         const DocRouters = this.props.docs.map(e =>
-            <Route key={'Route'+e.Name} exact path={'/docName/' + e.Name + '/'} render={() => <ListEntries docName={e.Name}/>}/>
+            <Route key={'Route' + e.Name} exact path={'/docName/' + e.Name + '/'}
+                   render={() => <ListEntries docName={e.Name}/>}/>
         )
 
         let MenuItem;
 
         if (!this.props.loading) {
             MenuItem = this.props.docs.map(e =>
-                <Menu.Item key={'menuitem'+e.Name}>
-                    <Link to={"/docName/" + e.Name + "/"} className={"menu-item-link"} onClick={()=>this.menuItemClick('menuitem'+e.Name)}>
+                <Menu.Item key={'menuitem' + e.Name}>
+                    <Link to={"/docName/" + e.Name + "/"} className={"menu-item-link"}
+                          onClick={() => this.menuItemClick('menuitem' + e.Name)}>
                         {e.Name}
                         <Progress status={"active"}
                                   percent={Math.round(100 - e.UntranslatedEntries * 100 / e.TotalEntries)}
@@ -118,14 +127,13 @@ class mainPage extends React.Component {
                     </Link>
                 </Menu.Item>);
         }
-        else {
+
+        else
             MenuItem = () => {
             };
-        }
-
 
         return (
-            <Layout>
+            <Layout style={{height: "100%"}}>
                 <Helmet>
                     <meta charSet="utf-8"/>
                     <title>Kicad 文档翻译</title>
@@ -135,20 +143,25 @@ class mainPage extends React.Component {
                 <ReactResizeDetector handleWidth handleHeight
                                      onResize={(e) => (this.setState({...this.state, width: e}))}/>
                 <Header className="frame-header" style={{fontcolor: "black", backgroundColor: "#ffffff"}}>
-                    <Icon
-                        className={this.state.width < this.triggerDisapperWidth ? "trigger" : "trigger-disable"}
-                        type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                        onClick={this.toggle}
-                    />
+                    <div
+                        style={{display:this.isEditing()?"none":"block"}}
+                        className={this.state.collapsed  ? "trigger-common trigger-unfold" : "trigger-common trigger-fold"}>
+                        <Icon
+                            type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+                            onClick={this.toggle}
+                        />
+                    </div>
+                    <div className={"img-wrapper"}>
                     <img alt="logo" src={mainLogo} height={"64px"}/>
-                    <p>
+                    </div>
+                    <p ref={this.headerRef}>
                         文档翻译
                     </p>
                     <Icon type={"user"} className={"login-button"} onClick={() => console.log("hit")}/>
                 </Header>
 
                 <Content className="frame-content">
-                    <Layout style={{background: '#fff', height: 'fit-content',}}>
+                    <Layout style={{background: '#fff', height: "100%"}}>
                         <Sider
                             collapsible
                             breakpoint="lg"
